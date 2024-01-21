@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/payment_navigation"
+    app:startDestination="@id/navigationAmountFragment">
+
+    <fragment
+        android:id="@+id/navigationAmountFragment"
+        android:name="com.nicepayment.paypro.ui.payment.NavigationAmountFragment"
+        android:label="fragment_navigation_amount"
+        tools:layout="@layout/fragment_navigation_amount" >
+        <action
+            android:id="@+id/action_navigationAmountFragment_to_navigationCodeFragment"
+            app:destination="@id/navigationCodeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigationCodeFragment"
+        android:name="com.nicepayment.paypro.ui.payment.NavigationCodeFragment"
+        android:label="fragment_navigation_code"
+        tools:layout="@layout/fragment_navigation_code" >
+        <action
+            android:id="@+id/action_navigationCodeFragment_to_navigationLoadingStateFragment"
+            app:destination="@id/navigationLoadingStateFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigationLoadingStateFragment"
+        android:name="com.nicepayment.paypro.ui.payment.NavigationLoadingStateFragment"
+        android:label="fragment_navigation_loading_state"
+        tools:layout="@layout/fragment_navigation_loading_state" >
+        <action
+            android:id="@+id/action_navigationLoadingStateFragment_to_navigationResultFragment"
+            app:destination="@id/navigationResultFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigationResultFragment"
+        android:name="com.nicepayment.paypro.ui.payment.NavigationResultFragment"
+        android:label="fragment_navigation_result"
+        tools:layout="@layout/fragment_navigation_result" />
+</navigation>
