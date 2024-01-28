@@ -7,14 +7,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.textfield.TextInputEditText
 import com.nicepayment.paypro.R
 import com.nicepayment.paypro.databinding.FragmentHomeBinding
 import com.nicepayment.paypro.databinding.FragmentNavigationAmountBinding
+import com.nicepayment.paypro.model.argument.PaymentArgument
+import com.nicepayment.paypro.model.argument.PaymentMethod
 import kotlinx.coroutines.flow.distinctUntilChanged
 
 class NavigationAmountFragment : Fragment() {
@@ -23,26 +27,39 @@ class NavigationAmountFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private lateinit var amount: String
+    private val args: NavigationAmountFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentNavigationAmountBinding.inflate(layoutInflater, container, false)
         val root: View = binding.root
-        val viewModel = ViewModelProvider(this)[PaymentViewModel::class.java]
         val next: Button = _binding!!.next
 
         next.setOnClickListener {
             Log.e("Model","next")
-            amount = _binding!!.editTextAmount.text.toString()
-            viewModel.setAmount(amount)
-            findNavController().navigate(R.id.action_navigationAmountFragment_to_navigationCodeFragment)
+            //viewModel.setAmount(amount)
+            //findNavController().navigate(R.id.action_navigationAmountFragment_to_navigationCodeFragment)
+
+            val amount = _binding!!.editTextAmount.text.toString().toInt()
+            if ( amount >0 ) {
+                val paymentArgument = PaymentArgument(PaymentMethod.PayPro,amount)
+                toCodeFragment(paymentArgument)
+            } else {
+                Toast.makeText(requireContext(),"결제 금액을 입력해 주세요", Toast.LENGTH_SHORT).show()
+            }
         }
 
         return root
     }
 
-
+    private fun toCodeFragment(paymentArgument: PaymentArgument) {
+        this@NavigationAmountFragment.findNavController().navigate(
+            NavigationAmountFragmentDirections
+                .actionNavigationAmountFragmentToNavigationCodeFragment(
+                    paymentArgument
+                )
+        )
+    }
 }

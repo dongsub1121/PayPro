@@ -5,6 +5,7 @@
     android:id="@+id/payment_navigation"
     app:startDestination="@id/navigationAmountFragment">
 
+
     <fragment
         android:id="@+id/navigationAmountFragment"
         android:name="com.nicepayment.paypro.ui.payment.NavigationAmountFragment"
@@ -13,15 +14,23 @@
         <action
             android:id="@+id/action_navigationAmountFragment_to_navigationCodeFragment"
             app:destination="@id/navigationCodeFragment" />
+        <argument
+            android:name="data"
+            app:argType="com.nicepayment.paypro.model.argument.PaymentArgument" />
+
     </fragment>
     <fragment
         android:id="@+id/navigationCodeFragment"
         android:name="com.nicepayment.paypro.ui.payment.NavigationCodeFragment"
         android:label="fragment_navigation_code"
         tools:layout="@layout/fragment_navigation_code" >
+
         <action
             android:id="@+id/action_navigationCodeFragment_to_navigationLoadingStateFragment"
             app:destination="@id/navigationLoadingStateFragment" />
+        <argument
+            android:name="data"
+            app:argType="com.nicepayment.paypro.model.argument.PaymentArgument" />
     </fragment>
     <fragment
         android:id="@+id/navigationLoadingStateFragment"
@@ -31,10 +40,17 @@
         <action
             android:id="@+id/action_navigationLoadingStateFragment_to_navigationResultFragment"
             app:destination="@id/navigationResultFragment" />
+        <argument
+            android:name="code"
+            app:argType="com.nicepayment.paypro.model.argument.PaymentArgument" />
     </fragment>
     <fragment
         android:id="@+id/navigationResultFragment"
         android:name="com.nicepayment.paypro.ui.payment.NavigationResultFragment"
         android:label="fragment_navigation_result"
         tools:layout="@layout/fragment_navigation_result" />
+
+    <action
+        android:id="@+id/action_payment_start"
+        app:destination="@id/navigationAmountFragment"/>
 </navigation>

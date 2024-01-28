@@ -7,18 +7,19 @@ import java.util.Date
 import kotlin.random.Random
 
 data class Order(
-    var orderId: String?,
+    var orderId: String =  "nice${formatYyMmDdHhMmSs()}${Random(4)}",
     var orderName: String?,
-    var totalAmount: Number?,
+    var totalAmount: Int?,
     var goods: MutableList<Goods>?
 ) {
 
     companion object {
         fun create(newGoods: Goods): Order {
             val id = "nice${formatYyMmDdHhMmSs()}${Random(4)}"
-            val amount = newGoods.price.toLong() * newGoods.quantity
+            val amount = (newGoods.price.toLong() * newGoods.quantity).toInt()
             val mutableList = mutableListOf<Goods>()
             mutableList.add(newGoods)
+
 
             return Order(id, newGoods.name, amount, mutableList)
         }
@@ -35,9 +36,9 @@ data class Order(
             orderId
         } ?: "nice${formatYyMmDdHhMmSs()}${Random(4)}"
 
-        totalAmount = totalAmount?.let {
+        totalAmount = (totalAmount?.let {
             it.toDouble() + amount
-        } ?: amount
+        } ?: amount) as Int?
 
         goods?.add(newGoods)
     }
@@ -51,6 +52,6 @@ fun formatYyMmDdHhMmSs(): String {
 
 data class Goods (
     val name: String,
-    val price: Number,
+    val price: Int,
     val quantity: Int
 )

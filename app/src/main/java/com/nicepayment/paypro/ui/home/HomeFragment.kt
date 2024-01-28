@@ -9,7 +9,10 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.nicepayment.paypro.databinding.FragmentHomeBinding
+import com.nicepayment.paypro.model.argument.PaymentArgument
+import com.nicepayment.paypro.model.argument.PaymentMethod
 import com.nicepayment.paypro.ui.payment.PaymentActivity
 
 class HomeFragment : Fragment() {
@@ -31,15 +34,11 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
-
         val button: Button = binding.button
         button.setOnClickListener{
-            val intent  = Intent(requireActivity(), PaymentActivity::class.java)
+           val intent  = Intent(requireActivity(), PaymentActivity::class.java)
             startActivity(intent)
+
         }
         return root
     }
